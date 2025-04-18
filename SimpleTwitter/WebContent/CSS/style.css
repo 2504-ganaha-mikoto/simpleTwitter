@@ -1,5 +1,5 @@
 body {
-	background-color: #E3FFFF;
+	background-color: brown;
 }
 
 .main-contents {
@@ -7,7 +7,7 @@ body {
 	margin-bottom: 0px;
 	margin-left: 20px;
 	margin-right: 20px;
-	background-color: white;
+	background-color: brown;
 	height: 100%;
 	width: 800px;
 }
