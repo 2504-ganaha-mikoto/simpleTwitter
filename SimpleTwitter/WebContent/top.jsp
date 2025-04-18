@@ -51,6 +51,7 @@
 
 <div class="form-area">
     <c:if test="${ isShowMessageForm }">
+		<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
         <form action="message" method="post">
             いま、どうしてる？<br />
             <textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>

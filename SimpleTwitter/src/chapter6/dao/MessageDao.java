@@ -32,7 +32,7 @@ public class MessageDao {
 
     public void insert(Connection connection, Message message) {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() + 
+	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         PreparedStatement ps = null;
@@ -51,6 +51,7 @@ public class MessageDao {
             sql.append(")");
 
             ps = connection.prepareStatement(sql.toString());
+
 
             ps.setInt(1, message.getUserId());
             ps.setString(2, message.getText());
