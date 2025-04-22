@@ -138,8 +138,8 @@ public class SettingServlet extends HttpServlet {
 		}
 		//重複チェック アカウントが重複しているか、アカウントがそのユーザーのアカウントでなければエラー
 		User userAccount = new UserService().select(account);
-		//DBから引っ張ってきたId
 		if (userAccount != null) {
+			//DBから引っ張ってきたId
 			int userId = userAccount.getId();
 			if (id != userId) {
 				errorMessages.add("すでに存在するアカウントです");
