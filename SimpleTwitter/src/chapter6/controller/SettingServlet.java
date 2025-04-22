@@ -43,8 +43,8 @@ public class SettingServlet extends HttpServlet {
 
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
-				" : " + new Object() {
-				}.getClass().getEnclosingMethod().getName());
+		" : " + new Object() {
+		}.getClass().getEnclosingMethod().getName());
 		// セッションを取得する
 		HttpSession session = request.getSession();
 		// セッションから値を取得する
@@ -138,13 +138,10 @@ public class SettingServlet extends HttpServlet {
 		}
 		//重複チェック アカウントが重複しているか、アカウントがそのユーザーのアカウントでなければエラー
 		User userAccount = new UserService().select(account);
-		if (userAccount != null) {
-			//DBから引っ張ってきたId
-			int userId = userAccount.getId();
-			if (id != userId) {
-				errorMessages.add("すでに存在するアカウントです");
-			}
+		if ((userAccount != null) && (id != userAccount.getId())) {
+			errorMessages.add("すでに存在するアカウントです");
 		}
+
 		if (!StringUtils.isEmpty(email) && (50 < email.length())) {
 			errorMessages.add("メールアドレスは50文字以下で入力してください");
 		}
