@@ -40,7 +40,7 @@ public class SignUpServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() + 
+	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         request.getRequestDispatcher("signup.jsp").forward(request, response);
@@ -51,11 +51,10 @@ public class SignUpServlet extends HttpServlet {
             throws IOException, ServletException {
 
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() + 
+	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         List<String> errorMessages = new ArrayList<String>();
-
         User user = getUser(request);
         if (!isValid(user, errorMessages)) {
             request.setAttribute("errorMessages", errorMessages);
@@ -69,7 +68,7 @@ public class SignUpServlet extends HttpServlet {
     private User getUser(HttpServletRequest request) throws IOException, ServletException {
 
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() + 
+	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         User user = new User();
@@ -84,7 +83,7 @@ public class SignUpServlet extends HttpServlet {
     private boolean isValid(User user, List<String> errorMessages) {
 
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() + 
+	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         String name = user.getName();
@@ -96,11 +95,18 @@ public class SignUpServlet extends HttpServlet {
             errorMessages.add("名前は20文字以下で入力してください");
         }
 
+        //入力文字数チェック
         if (StringUtils.isEmpty(account)) {
             errorMessages.add("アカウント名を入力してください");
         } else if (20 < account.length()) {
             errorMessages.add("アカウント名は20文字以下で入力してください");
         }
+
+        //重複チェック
+        User userAccount = new UserService().select(account);
+        if (userAccount != null) {
+        	errorMessages.add("すでに存在するアカウントです");
+		}
 
         if (StringUtils.isEmpty(password)) {
             errorMessages.add("パスワードを入力してください");
