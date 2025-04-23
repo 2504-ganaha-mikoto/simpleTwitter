@@ -4,11 +4,15 @@ import static chapter6.utils.CloseableUtil.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import chapter6.beans.Message;
+import chapter6.exception.NoRowsUpdatedRuntimeException;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.logging.InitApplication;
 
@@ -64,4 +68,131 @@ public class MessageDao {
             close(ps);
         }
     }
-}
+
+	public void delete(Connection connection, int deleteId) {
+		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+			        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+			        PreparedStatement ps = null;
+			        try {
+			            StringBuilder sql = new StringBuilder();
+			            sql.append("DELETE FROM messages WHERE id = ");
+			            sql.append(" ? ");                  // message_id
+
+
+			            ps = connection.prepareStatement(sql.toString());
+
+
+			            ps.setInt(1, deleteId);
+
+			            ps.executeUpdate();
+			        } catch (SQLException e) {
+					log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			            throw new SQLRuntimeException(e);
+			        } finally {
+			            close(ps);
+			        }
+	}
+//メッセージ編集表示用
+	public Message select(Connection connection, Integer id) {
+
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+
+			sql.append("SELECT ");
+			sql.append("    messages.id as id, ");
+			sql.append("    messages.text as text, ");
+			sql.append("    messages.user_id as user_id, ");
+			sql.append("    messages.created_date as created_date ");
+			sql.append("FROM messages ");
+			sql.append("WHERE id =");
+            sql.append(" ? ");                  // message_id
+
+
+			ps = connection.prepareStatement(sql.toString());
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			List<Message> message = toEditMessages(rs);
+
+			return message.get(0);
+		} catch (SQLException e) {
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+//beansでJSPが使いやすいように箱への入れ方を整えてあげる
+	private List<Message> toEditMessages(ResultSet rs) throws SQLException {
+
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		List<Message> messages = new ArrayList<Message>();
+		try {
+			while (rs.next()) {
+				Message message = new Message();
+				message.setId(rs.getInt("id"));
+				message.setText(rs.getString("text"));
+				message.setUserId(rs.getInt("user_id"));
+				message.setCreatedDate(rs.getTimestamp("created_date"));
+
+				messages.add(message);
+			}
+			return messages;
+		} finally {
+			close(rs);
+		}
+	}
+
+	public void update(Connection connection, Message message) {
+
+			log.info(new Object() {
+			}.getClass().getEnclosingClass().getName() +
+					" : " + new Object() {
+					}.getClass().getEnclosingMethod().getName());
+
+			PreparedStatement ps = null;
+			try {
+				StringBuilder sql = new StringBuilder();
+				sql.append("UPDATE messages SET ");
+				sql.append("    text = ?, ");
+				sql.append("    updated_date = CURRENT_TIMESTAMP ");
+				sql.append("WHERE id = ?");
+
+				ps = connection.prepareStatement(sql.toString());
+
+				ps.setString(1, message.getText());
+				ps.setInt(2, message.getId());
+				int count = ps.executeUpdate();
+				if (count == 0) {
+					log.log(Level.SEVERE, "更新対象のレコードが存在しません", new NoRowsUpdatedRuntimeException());
+					throw new NoRowsUpdatedRuntimeException();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, new Object() {
+				}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+				throw new SQLRuntimeException(e);
+			} finally {
+				close(ps);
+			}
+		}
+
+	}

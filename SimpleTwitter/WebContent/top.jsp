@@ -54,18 +54,19 @@
 					<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
 					<form action="message" method="post">
 						いま、どうしてる？<br />
-						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+						<textarea name="text" cols="100" rows="5" class="tweet-box"><pre></pre></textarea>
 						<br /> <input type="submit" value="つぶやく">（140文字まで）
 					</form>
 				</c:if>
 			</div>
 		</c:if>
 		<div class="messages">
+			<!-- 		item～～　のところでmessageのキーをつかえるようにしています -->
 			<c:forEach items="${messages}" var="message">
 				<div class="message">
 					<div class="account-name">
-						<a href="./?user_id=<c:out value="${message.userId}"/> ">
-							<c:out value="${message.account}" />
+						<a href="./?user_id=<c:out value="${message.userId}"/> "> <c:out
+								value="${message.account}" />
 						</a>
 					</div>
 					<div class="text">
@@ -75,6 +76,16 @@
 						<fmt:formatDate value="${message.createdDate}"
 							pattern="yyyy/MM/dd HH:mm:ss" />
 					</div>
+					<c:if test="${loginUser.id == message.userId}" >
+						<form action="deleteMessage" method="post">
+							<input name="message_id" value="${message.id}" type="hidden" />
+							<input type="submit" value="削除">
+						</form>
+						<form action="edit" method="get">
+							<input name="message_id" value="${message.id}" type="hidden" />
+							<input type="submit" value="編集">
+						</form>
+					</c:if>
 				</div>
 			</c:forEach>
 		</div>

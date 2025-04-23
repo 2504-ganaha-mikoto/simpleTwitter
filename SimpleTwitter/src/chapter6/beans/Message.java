@@ -10,6 +10,7 @@ public class Message implements Serializable {
     private String text;
     private Date createdDate;
     private Date updatedDate;
+    
 	public int getId() {
 		return id;
 	}
