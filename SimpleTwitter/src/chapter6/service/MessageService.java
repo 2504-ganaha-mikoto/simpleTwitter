@@ -109,8 +109,8 @@ public class MessageService {
 		}
 	}
 
-//	DeleteMessageSevletからきた削除したいIDが入った削除メソッド
-//	Daoにコネクションと削除したいメッセージのIDを渡したい
+	//	DeleteMessageSevletからきた削除したいIDが入った削除メソッド
+	//	Daoにコネクションと削除したいメッセージのIDを渡したい
 	public void delete(int deleteId) {
 
 		log.info(new Object() {
@@ -121,7 +121,7 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			new MessageDao().delete(connection,deleteId);
+			new MessageDao().delete(connection, deleteId);
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
@@ -137,35 +137,9 @@ public class MessageService {
 			close(connection);
 		}
 	}
+
 	//編集メッセージ投稿用
 	public void update(Message message) {
-			log.info(new Object() {
-			}.getClass().getEnclosingClass().getName() +
-					" : " + new Object() {
-					}.getClass().getEnclosingMethod().getName());
-
-			Connection connection = null;
-			try {
-				connection = getConnection();
-				new MessageDao().update(connection, message);
-				commit(connection);
-			} catch (RuntimeException e) {
-				rollback(connection);
-				log.log(Level.SEVERE, new Object() {
-				}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-				throw e;
-			} catch (Error e) {
-				rollback(connection);
-				log.log(Level.SEVERE, new Object() {
-				}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-				throw e;
-			} finally {
-				close(connection);
-			}
-		}
-//編集メッセージ表示用
-	public Message select(Integer id) {
-
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
 				" : " + new Object() {
@@ -174,10 +148,9 @@ public class MessageService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			Message message = new MessageDao().select(connection,id);
+			new MessageDao().update(connection, message);
 			commit(connection);
-			return message;
-			} catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object() {
 			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
@@ -193,32 +166,31 @@ public class MessageService {
 	}
 
 	//編集メッセージ表示用
-		public Message selectid(Integer id) {
+	public Message select(Integer id) {
 
-			log.info(new Object() {
-			}.getClass().getEnclosingClass().getName() +
-					" : " + new Object() {
-					}.getClass().getEnclosingMethod().getName());
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
 
-			Connection connection = null;
-			try {
-				connection = getConnection();
-				Message message = new MessageDao().select(connection,id);
-				commit(connection);
-				return message;
-				} catch (RuntimeException e) {
-				rollback(connection);
-				log.log(Level.SEVERE, new Object() {
-				}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-				throw e;
-			} catch (Error e) {
-				rollback(connection);
-				log.log(Level.SEVERE, new Object() {
-				}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
-				throw e;
-			} finally {
-				close(connection);
-			}
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			Message message = new MessageDao().select(connection, id);
+			commit(connection);
+			return message;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} finally {
+			close(connection);
 		}
 	}
-
+}
