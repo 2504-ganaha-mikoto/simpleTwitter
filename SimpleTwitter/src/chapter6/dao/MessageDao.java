@@ -121,8 +121,11 @@ public class MessageDao {
 			ResultSet rs = ps.executeQuery();
 
 			List<Message> message = toEditMessages(rs);
-
-			return message.get(0);
+			if (message.isEmpty()) {
+				return null;
+			} else {
+				return message.get(0);
+			}
 		} catch (SQLException e) {
 			log.log(Level.SEVERE, new Object() {
 			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
