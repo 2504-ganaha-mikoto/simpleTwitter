@@ -193,7 +193,7 @@ public class MessageService {
 	}
 
 	//編集メッセージ表示用
-		public int selectid(Integer id) {
+		public Message selectid(Integer id) {
 
 			log.info(new Object() {
 			}.getClass().getEnclosingClass().getName() +

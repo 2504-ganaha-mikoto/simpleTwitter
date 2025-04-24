@@ -54,7 +54,7 @@
 					<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
 					<form action="message" method="post">
 						いま、どうしてる？<br />
-						<textarea name="text" cols="100" rows="5" class="tweet-box"><pre></pre></textarea>
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
 						<br /> <input type="submit" value="つぶやく">（140文字まで）
 					</form>
 				</c:if>
@@ -70,13 +70,13 @@
 						</a>
 					</div>
 					<div class="text">
-						<c:out value="${message.text}" />
+						<pre><c:out value="${message.text}" /></pre>
 					</div>
 					<div class="date">
 						<fmt:formatDate value="${message.createdDate}"
 							pattern="yyyy/MM/dd HH:mm:ss" />
 					</div>
-					<c:if test="${loginUser.id == message.userId}" >
+<%-- 					<c:if test="${loginUser.id == message.userId}" > --%>
 						<form action="deleteMessage" method="post">
 							<input name="message_id" value="${message.id}" type="hidden" />
 							<input type="submit" value="削除">
@@ -85,7 +85,7 @@
 							<input name="message_id" value="${message.id}" type="hidden" />
 							<input type="submit" value="編集">
 						</form>
-					</c:if>
+<%-- 					</c:if> --%>
 				</div>
 			</c:forEach>
 		</div>
