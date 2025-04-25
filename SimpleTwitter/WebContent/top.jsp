@@ -86,7 +86,38 @@
 							<input type="submit" value="編集">
 						</form>
 					</c:if>
+					<c:if test="${ not empty loginUser }">
+						<c:if test="${ loginUser.id != message.userId }">
+							<div class="form-area">
+								<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
+								<form action="comment" method="post">
+									<input name="message_id" value="${message.id}" type="hidden" />
+										返信<br/>
+									<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br/>
+									<input type="submit" value="返信">
+								</form>
+							</div>
+						</c:if>
+					</c:if>
 				</div>
+			<c:if test="${comment.messageId == message.id}">
+			<c:forEach items="${comments}" var="comment">
+				<div class="message">
+					<div class="account-name">
+						<a href="./?user_id=<c:out value="${comments.userId}"/> ">
+						<c:out value="${comments.account}" />
+						</a>
+					</div>
+					<div class="text">
+						<pre><c:out value="${comments.text}" /></pre>
+					</div>
+					<div class="date">
+						<fmt:formatDate value="${comments.createdDate}"
+							pattern="yyyy/MM/dd HH:mm:ss" />
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
 			</c:forEach>
 		</div>
 		<div class="copyright">Copyright(c)Mikoto</div>

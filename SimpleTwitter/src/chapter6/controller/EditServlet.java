@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import chapter6.beans.Message;
+import chapter6.beans.User;
 import chapter6.logging.InitApplication;
 import chapter6.service.MessageService;
 
@@ -49,8 +50,9 @@ public class EditServlet extends HttpServlet {
 		//メッセージを表示させたい
 		//JSPのmessage_idからIDを確保       URLのバリデーションはゲットしたパラメータを評価する
 		String messageId = request.getParameter("message_id");
-		//User user = (User) session.getAttribute("loginUser");
-		//int loginUserId = user.getId();
+		User user = (User) session.getAttribute("loginUser");
+		int massageUserId = 0;
+		int loginUserId = user.getId();
 		//なんでloginUser.idではだめなのか
 		//エラー用のリスト
 		List<String> errorMessages = new ArrayList<String>();
@@ -61,12 +63,11 @@ public class EditServlet extends HttpServlet {
 			//リクエストのパラメーターが整数であることを確認してから
 			int intMassageId = Integer.parseInt(messageId);
 			messages = new MessageService().select(intMassageId);
-			//massageUserId = messages.getUserId();
+			massageUserId = messages.getUserId();
 		}
 		//上のifを通ってmessagesに変化がなくnullのままであればエラーメッセージをadd
 		//また、ログインユーザーと上でもらってきたメッセージの中のユーザーIDが一致しなければエラーメッセージをadd
-		if (messages == null) {
-			//			|| (loginUserId != massageUserId))
+		if ((messages == null)|| (loginUserId != massageUserId)){
 			errorMessages.add("不正なパラメータが入力されました");
 			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
