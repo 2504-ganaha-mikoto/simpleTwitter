@@ -49,62 +49,63 @@
 				<c:remove var="errorMessages" scope="session" />
 			</c:if>
 			<div class="form-area">
-				<form action="top" method="get">
+				<form action="index.jsp" method="get">
 					日付：<input type="date" name="start">～<input type="date" name="end">
 					<input type="submit" value="絞込">
 				</form>
 			</div>
-	</div>
-
-	<div class="form-area">
-		<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
-		<form action="message" method="post">
-			いま、どうしてる？<br />
-			<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br />
-			<input type="submit" value="つぶやく">（140文字まで）
-		</form>
-	</div>
-	</c:if>
-	<div class="messages">
-		<!-- 		item～～　のところでmessageのキーをつかえるようにしています -->
-		<c:forEach items="${messages}" var="message">
-			<div class="message">
-				<div class="account-name">
-					<a href="./?user_id=<c:out value="${message.userId}"/> "> <c:out
-							value="${message.account}" />
-					</a>
-				</div>
-				<div class="text">
-					<pre>
-						<c:out value="${message.text}" />
-					</pre>
-				</div>
-				<div class="date">
-					<fmt:formatDate value="${message.createdDate}"
-						pattern="yyyy/MM/dd HH:mm:ss" />
-				</div>
-				<c:if test="${loginUser.id == message.userId}">
-					<form action="deleteMessage" method="post">
-						<input name="message_id" value="${message.id}" type="hidden" /> <input
-							type="submit" value="削除">
+			<div class="form-area">
+				<c:if test="${ isShowMessageForm }">
+					<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
+					<form action="message" method="post">
+						いま、どうしてる？<br />
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br/>
+						<input type="submit" value="つぶやく">（140文字まで）
 					</form>
-					<form action="edit" method="get">
-						<input name="message_id" value="${message.id}" type="hidden" /> <input
-							type="submit" value="編集">
-					</form>
-				</c:if>
-				<c:if test="${ not empty loginUser }">
-					<div class="form-area">
-						<form action="comment" method="post">
-							<input name="message_id" value="${message.id}" type="hidden" />
-							返信<br />
-							<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
-							<br /> <input type="submit" value="返信">
-						</form>
-					</div>
 				</c:if>
 			</div>
-			<!--commentsはリスト型なので呼び出して一個ずつ表示する。varは要素の一つ一つの仮の名前。 -->
+		</c:if>
+		<div class="messages">
+			<!-- 		item～～　のところでmessageのキーをつかえるようにしています -->
+			<c:forEach items="${messages}" var="message">
+				<div class="message">
+					<div class="account-name">
+						<a href="./?user_id=<c:out value="${message.userId}"/> ">
+						<c:out value="${message.account}" />
+						</a>
+					</div>
+					<div class="text">
+						<pre><c:out value="${message.text}" /></pre>
+					</div>
+					<div class="date">
+						<fmt:formatDate value="${message.createdDate}"
+							pattern="yyyy/MM/dd HH:mm:ss" />
+					</div>
+					<c:if test="${loginUser.id == message.userId}">
+						<form action="deleteMessage" method="post">
+							<input name="message_id" value="${message.id}" type="hidden" />
+							<input type="submit" value="削除">
+						</form>
+						<form action="edit" method="get">
+							<input name="message_id" value="${message.id}" type="hidden" />
+							<input type="submit" value="編集">
+						</form>
+					</c:if>
+					<c:if test="${ not empty loginUser }">
+						<c:if test="${ loginUser.id != message.userId }">
+							<div class="form-area">
+								<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
+								<form action="comment" method="post">
+									<input name="message_id" value="${message.id}" type="hidden" />
+										返信<br/>
+									<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br/>
+									<input type="submit" value="返信">
+								</form>
+							</div>
+						</c:if>
+					</c:if>
+				</div>
+		<!--commentsはリスト型なので呼び出して一個ずつ表示する。varは要素の一つ一つの仮の名前。 -->
 			<c:forEach items="${comments}" var="comment">
 				<c:if test="${comment.messageId == message.id}">
 					<div class="message">
@@ -114,9 +115,7 @@
 							</a>
 						</div>
 						<div class="text">
-							<pre>
-								<c:out value="${comment.text}" />
-							</pre>
+							<pre><c:out value="${comment.text}" /></pre>
 						</div>
 						<div class="date">
 							<fmt:formatDate value="${comment.createdDate}"
@@ -125,9 +124,10 @@
 					</div>
 				</c:if>
 			</c:forEach>
-		</c:forEach>
+			</c:forEach>
+		</div>
+		<div class="copyright">Copyright(c)Mikoto</div>
 	</div>
-	<div class="copyright">Copyright(c)Mikoto</div>
 </body>
 </html>
 

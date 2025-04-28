@@ -5,6 +5,7 @@ import static chapter6.utils.DBUtil.*;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,16 +88,17 @@ public class MessageService {
 			}
 			String startDay = null;
 			String endDay = null;
-			if(start != null){
+			if(!StringUtils.isBlank(start)){
 				startDay = start + " 00:00:00";
 			} else {
 				startDay = "2020/01/01 00:00:00";	//デフォルト値
 			}
-			if (end != null) {
+			if (!StringUtils.isBlank(end)) {
 				endDay = end + " 23:59:59";
 			} else {
+				Date date = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-				endDay = sdf + " 23:59:59";		//デフォルト値
+				endDay = sdf.format(date) + " 23:59:59";		//デフォルト値
 			}
 
 			/*
