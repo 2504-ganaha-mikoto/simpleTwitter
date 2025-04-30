@@ -50,7 +50,7 @@
 			</c:if>
 		</c:if>
 			<div class="form-area">
-				<form action="index" method="get">
+				<form action="./" method="get">
 					日付：<input type="date" name="start">～<input type="date" name="end">
 					<input type="submit" value="絞込">
 				</form>

@@ -17,7 +17,7 @@ import chapter6.logging.InitApplication;
 import chapter6.service.CommentService;
 import chapter6.service.MessageService;
 
-@WebServlet(urlPatterns = { "/" })
+@WebServlet(urlPatterns = { "/index.jsp" })
 public class TopServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -48,9 +48,7 @@ public class TopServlet extends HttpServlet {
 
 		boolean isShowMessageForm = false;
 		User user = (User) request.getSession().getAttribute("loginUser");
-//		Message message = (Message) request.getSession().getAttribute("id");
 		if (user != null) {
-//			||(message != null))
 			isShowMessageForm = true;
 		}
 
@@ -63,10 +61,9 @@ public class TopServlet extends HttpServlet {
 		String start = request.getParameter("start");
 		String end = request.getParameter("end");
 
-
 		List<UserMessage> messages = new MessageService().select(userId,start,end);
 		List<UserComment> comments = new CommentService().select();
-
+		
 		request.setAttribute("comments", comments);
 		request.setAttribute("messages", messages);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);
