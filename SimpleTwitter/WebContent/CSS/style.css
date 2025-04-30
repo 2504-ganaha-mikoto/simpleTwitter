@@ -87,6 +87,9 @@ a.profile .account {
 	margin-left: 60px;
 }
 
+.comment{
+	background-color: #ffff00;
+}
 .message-icon .account-name {
 	margin-top: 1px;
 	margin-bottom: 5px;

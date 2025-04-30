@@ -48,12 +48,14 @@
 				</div>
 				<c:remove var="errorMessages" scope="session" />
 			</c:if>
+		</c:if>
 			<div class="form-area">
-				<form action="index.jsp" method="get">
+				<form action="index" method="get">
 					日付：<input type="date" name="start">～<input type="date" name="end">
 					<input type="submit" value="絞込">
 				</form>
 			</div>
+		<c:if test="${ not empty loginUser }">
 			<div class="form-area">
 				<c:if test="${ isShowMessageForm }">
 					<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
@@ -108,7 +110,7 @@
 		<!--commentsはリスト型なので呼び出して一個ずつ表示する。varは要素の一つ一つの仮の名前。 -->
 			<c:forEach items="${comments}" var="comment">
 				<c:if test="${comment.messageId == message.id}">
-					<div class="message">
+					<div class="comment">
 						<div class="account-name">
 							<a href="./?user_id=<c:out value="${comment.userId}"/> "> <c:out
 									value="${comment.account}" />

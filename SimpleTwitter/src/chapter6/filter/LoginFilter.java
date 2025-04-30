@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 //設定とつぶやきの編集画面でフィルターを設定したい
 @WebFilter(urlPatterns = {"/setting","/edit"})
 
-//implements Filterって何？
 public class LoginFilter implements Filter {
 
 	@Override
