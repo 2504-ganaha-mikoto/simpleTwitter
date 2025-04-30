@@ -1,6 +1,8 @@
 package chapter6.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -26,13 +28,19 @@ public class LoginFilter implements Filter {
 
 		//Http型に変換する
 		HttpServletRequest req = (HttpServletRequest) request;
-		//もしsessionがnullならレスポンス情報をもってリダイレクト
+		//もしsessionのなかのログインユーザーの情報がnullならレスポンス情報をもってリダイレクト
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("loginUser");
 
 		if (user == null) {
 			HttpServletResponse res = (HttpServletResponse) response;
-			res.sendRedirect("/login");
+			res.sendRedirect("./login");
+			//エラーメッセージを表示するjspはforEachでリスト型に対応しているから
+			//リストに格納して、セッションに格納して渡す
+			List<String> errorMessages = new ArrayList<String>();
+			errorMessages.add("ログインしてください");
+			session.setAttribute("errorMessages", errorMessages);
+			return;
 		}
 		chain.doFilter(request, response); // サーブレットを実行
 	}

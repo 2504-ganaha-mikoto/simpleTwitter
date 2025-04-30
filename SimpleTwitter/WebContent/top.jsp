@@ -31,8 +31,7 @@
 					</h2>
 				</div>
 				<div class="account">
-					@
-					<c:out value="${loginUser.account}" />
+					@<c:out value="${loginUser.account}" />
 				</div>
 				<div class="description">
 					<c:out value="${loginUser.description}" />
@@ -50,8 +49,10 @@
 			</c:if>
 		</c:if>
 			<div class="form-area">
+				<!-- 日付の情報をトップページをリクエストした時のサーブレットに送る -->
 				<form action="./" method="get">
-					日付：<input type="date" name="start">～<input type="date" name="end">
+					<!--リクエストやセッションに詰めた情報を表示させたいときはvalueをつかってEL式で表示する。 -->
+					日付：<input type="date" name="start" value="${start}">～<input type="date" name="end" value = "${end}">
 					<input type="submit" value="絞込">
 				</form>
 			</div>
@@ -107,21 +108,20 @@
 						</c:if>
 					</c:if>
 				</div>
-		<!--commentsはリスト型なので呼び出して一個ずつ表示する。varは要素の一つ一つの仮の名前。 -->
+			<!--commentsはリスト型なので呼び出して一個ずつ表示する。varは要素の一つ一つの仮の名前。 -->
 			<c:forEach items="${comments}" var="comment">
 				<c:if test="${comment.messageId == message.id}">
 					<div class="comment">
 						<div class="account-name">
-							<a href="./?user_id=<c:out value="${comment.userId}"/> "> <c:out
-									value="${comment.account}" />
+							<a href="./?user_id=<c:out value="${comment.userId}"/> ">
+							<c:out value="${comment.account}" />
 							</a>
 						</div>
 						<div class="text">
 							<pre><c:out value="${comment.text}" /></pre>
 						</div>
 						<div class="date">
-							<fmt:formatDate value="${comment.createdDate}"
-								pattern="yyyy/MM/dd HH:mm:ss" />
+							<fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 						</div>
 					</div>
 				</c:if>
