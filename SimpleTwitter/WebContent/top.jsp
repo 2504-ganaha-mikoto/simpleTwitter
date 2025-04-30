@@ -81,8 +81,7 @@
 						<pre><c:out value="${message.text}" /></pre>
 					</div>
 					<div class="date">
-						<fmt:formatDate value="${message.createdDate}"
-							pattern="yyyy/MM/dd HH:mm:ss" />
+						<fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 					</div>
 					<c:if test="${loginUser.id == message.userId}">
 						<form action="deleteMessage" method="post">
