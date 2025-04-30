@@ -94,17 +94,15 @@
 						</form>
 					</c:if>
 					<c:if test="${ not empty loginUser }">
-						<c:if test="${ loginUser.id != message.userId }">
-							<div class="form-area">
-								<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
-								<form action="comment" method="post">
-									<input name="message_id" value="${message.id}" type="hidden" />
-										返信<br/>
-									<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br/>
-									<input type="submit" value="返信">
-								</form>
-							</div>
-						</c:if>
+						<div class="form-area">
+							<!-- actionがURL、methodが対応するメソッド（POST）へ移行 -->
+							<form action="comment" method="post">
+								<input name="message_id" value="${message.id}" type="hidden" />
+								返信<br/>
+								<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br/>
+								<input type="submit" value="返信">
+							</form>
+						</div>
 					</c:if>
 				</div>
 			<!--commentsはリスト型なので呼び出して一個ずつ表示する。varは要素の一つ一つの仮の名前。 -->
