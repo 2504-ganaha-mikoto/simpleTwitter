@@ -5,32 +5,32 @@ import java.util.Date;
 
 public class User implements Serializable {
 
-    private int id;
-    private String account;
-    private String name;
-    private String email;
-    private String password;
-    private String description;
-    private Date createdDate;
-    private Date updatedDate;
+	private int id;
+	private String account;
+	private String name;
+	private String email;
+	private String password;
+	private String description;
+	private Date createdDate;
+	private Date updatedDate;
 
-    // getter/setterは省略されているので、自分で記述しましょう。
+	// getter/setterは省略されているので、自分で記述しましょう。
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getEmail() {
 		return email;
@@ -79,6 +79,5 @@ public class User implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
 
 }
