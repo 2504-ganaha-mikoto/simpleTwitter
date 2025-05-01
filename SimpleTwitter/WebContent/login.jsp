@@ -19,7 +19,7 @@
                         </c:forEach>
                     </ul>
                 </div>
-				<!-- ログインするかトップページに戻ったらセッションのメッセージは破棄したい -->
+                <!-- ログインするかトップページに戻ったらセッションのメッセージは破棄したい -->
                <c:remove var="errorMessages" scope="session" />
             </c:if>
             <form action="login" method="post"><br />

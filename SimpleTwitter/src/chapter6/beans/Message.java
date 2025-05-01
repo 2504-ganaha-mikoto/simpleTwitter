@@ -10,8 +10,6 @@ public class Message implements Serializable {
 	private String text;
 	private Date createdDate;
 	private Date updatedDate;
-	private String start;
-	private String end;
 
 
 	public int getId() {
@@ -52,22 +50,6 @@ public class Message implements Serializable {
 
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
-	}
-
-	public String getStart() {
-		return start;
-	}
-
-	public void setStart(String start) {
-		this.start = start;
-	}
-
-	public String getEnd() {
-		return end;
-	}
-
-	public void setEnd(String end) {
-		this.end = end;
 	}
 
 	// getter/setterは省略されているので、自分で記述しましょう。
