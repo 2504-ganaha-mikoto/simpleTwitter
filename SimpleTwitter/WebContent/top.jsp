@@ -8,6 +8,9 @@
 <head>
 <link href="./css/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="./js/vendor/jquery-3.7.1.min.js"></script>
+<script src="./js/vendor/jquery-3.7.1.js"></script>
+<script src="./js/main.js"></script>
 <title>簡易Twitter</title>
 </head>
 <body>
@@ -86,7 +89,7 @@
 					<c:if test="${loginUser.id == message.userId}">
 						<form action="deleteMessage" method="post">
 							<input name="message_id" value="${message.id}" type="hidden" />
-							<input type="submit" value="削除">
+							<input type="submit" value="削除" id="del" >
 						</form>
 						<form action="edit" method="get">
 							<input name="message_id" value="${message.id}" type="hidden" />
