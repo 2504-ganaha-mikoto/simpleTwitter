@@ -3,16 +3,14 @@ package chapter6.beans;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Message implements Serializable {
+public class Comment implements Serializable {
 
 	private int id;
+	private int messageId;
 	private int userId;
 	private String text;
 	private Date createdDate;
 	private Date updatedDate;
-	private String start;
-	private String end;
-
 
 	public int getId() {
 		return id;
@@ -54,20 +52,12 @@ public class Message implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public String getStart() {
-		return start;
+	public int getMessageId() {
+		return messageId;
 	}
 
-	public void setStart(String start) {
-		this.start = start;
-	}
-
-	public String getEnd() {
-		return end;
-	}
-
-	public void setEnd(String end) {
-		this.end = end;
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
 	}
 
 	// getter/setterは省略されているので、自分で記述しましょう。

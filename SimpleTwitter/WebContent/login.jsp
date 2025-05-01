@@ -19,8 +19,9 @@
                         </c:forEach>
                     </ul>
                 </div>
+				<!-- ログインするかトップページに戻ったらセッションのメッセージは破棄したい -->
+               <c:remove var="errorMessages" scope="session" />
             </c:if>
-
             <form action="login" method="post"><br />
                 <label for="accountOrEmail">アカウント名かメールアドレス</label>
                 <input name="accountOrEmail" id="accountOrEmail"/> <br />
@@ -29,8 +30,9 @@
                 <input name="password" type="password" id="password"/> <br />
 
                 <input type="submit" value="ログイン" /> <br />
-                <a href="./">戻る</a>
             </form>
+
+            <a href="./">戻る</a>
 
             <div class="copyright"> Copyright(c)YourName</div>
         </div>
